@@ -1,5 +1,7 @@
 from argparse import ArgumentParser
-import socket
+import requests
+import whois
+import datetime
 
 def parser_command_line():
     parser = ArgumentParser()
@@ -12,27 +14,27 @@ def parser_command_line():
 def get_list_urls(path):
     list_urls = open(path, 'r', encoding='utf-8')
     list_urls = list_urls.read()
-    print(list_urls.split(','))
-    return list_urls.split(',')
+    return list_urls.split()
 
 
-def load_urls4check(list_urls):
-    url_who_is = 'whois.iana.org'
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock = sock.connect((url_who_is, 43))
-    for url in list_urls:
-        print(url + '\r\n')
-        sock.send((url + '\r\n').encode())
-        continue
-        data_who_is = sock.recv()
-    print(data_who_is.decode())
+def get_response_whois(url):
+    response_whois = whois.whois(url)
+    return response_whois
 
 
 def is_server_respond_with_200(url):
-    pass
+    request = requests.get(url)
+    status_website = request.status_code
+    if status_website == 200:
+        return status_website
 
 
-def get_domain_expiration_date(domain_name):
+def get_domain_expiration_date(response_whois):
+    expiration_date = response_whois.expiration_date
+    return expiration_date
+
+
+def get_result_of_the_check(url):
     pass
 
 
@@ -40,4 +42,6 @@ if __name__ == '__main__':
     option = parser_command_line()
     path = option.filepath
     list_urls = get_list_urls(path)
-    load_urls4check(list_urls)
+    for url in list_urls:
+        response_whois = get_response_whois(url)
+        print(get_domain_expiration_date(response_whois))
