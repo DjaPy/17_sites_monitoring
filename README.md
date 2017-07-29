@@ -29,6 +29,26 @@ if you have error, you need enter `sudo` before command.
 An example of running
 
 ```
+Website:  http://juniorpythonblog.com
+Status:  200
+Until the date of expiry of: 9 months
+==================================================
+Website:  http://yandex.ru
+Status:  200
+Until the date of expiry of: 2 months
+==================================================
+Website:  http://google.com
+Status:  200
+Until the date of expiry of: 38 months
+==================================================
+Website:  http://vk.com
+Status:  200
+Until the date of expiry of: 10 months
+==================================================
+Website:  http://stackoverflow.com
+Status:  200
+Until the date of expiry of: 6 months
+==================================================
 
 ```
 
