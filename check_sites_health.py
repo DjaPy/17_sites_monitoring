@@ -12,10 +12,8 @@ def parser_command_line():
 
 
 def get_list_urls(path):
-    list_urls = open(path, 'r', encoding='utf-8')
-    list_urls = list_urls.read()
-    return list_urls.split()
-
+    with open(path, 'r', encoding='utf-8') as list_urls:
+        return list_urls.read().split()
 
 def get_response_whois(url):
     response_whois = whois.whois(url)
@@ -24,10 +22,10 @@ def get_response_whois(url):
 
 def is_server_respond_with_200(url):
     code_200_ok = 200
-    request = requests.get(url)
-    status_website = request.status_code
-    if status_website == code_200_ok:
-        return status_website
+    response = requests.get(url)
+    status_website = response.ok
+    if status_website:
+        return code_200_ok
 
 
 def get_domain_expiration_date(response_whois):
